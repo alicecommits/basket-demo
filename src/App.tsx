@@ -80,14 +80,6 @@ function App() {
     }
   }
 
-  /* Note:
-  The filter() method is perfect for removal use case because:
-  It creates a new array rather than modifying the existing one 
-  (important for React state updates)
-  It provides a clean, declarative way to express 
-  "keep everything except this one item"
-  It properly handles the case where the item might not exist in the array
-  */
   function handleRemoveProduct(productIdAsInt: number) {
     const productId = productIdAsInt.toString();
     setProductQty((prevQty: any) => {
