@@ -14,11 +14,12 @@ interface ProductInfo {
   price: number;
   title: string;
 }
+type Quantity = Record<string, number>;
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProducts, setSelectedProducts] = useState<ProductInfo[]>([]);
-  const [productQty, setProductQty] = useState<any>({});
+  const [productQty, setProductQty] = useState<Quantity>({});
 
   // Calculate total using useMemo - only recalculates when dependencies change
   const memoizedTotalInvoice = useMemo(() => {
@@ -54,8 +55,8 @@ function App() {
   }
 
   // when a dynamically generated button is clicked,
-  // this function gets the ref of the button that was clicked
-  // via the product arg used in the map
+  // this function gets the info of the corresponding product
+  // dynamically generated from products.map((product) => {...})
   function handleProductSelect(product: Product) {
     // first, quantities
     setProductQty((prevQty: any) => {
@@ -80,9 +81,13 @@ function App() {
     }
   }
 
+  // for this one, no need to pass the entire product info
+  // the product ID is enough
   function handleRemoveProduct(productIdAsInt: number) {
     const productId = productIdAsInt.toString();
-    setProductQty((prevQty: any) => {
+
+    // don't forget to return within the arrow function
+    setProductQty((prevQty: Quantity) => {
       // Create new object to avoid direct state mut
       const newQty = { ...prevQty };
       // If product already exists, decrement
@@ -99,7 +104,8 @@ function App() {
     });
 
     // If product qty is now 0, remove product from array
-    setProductQty((currentQty: any) => {
+    // don't forget to return within the arrow function
+    setProductQty((currentQty: Quantity) => {
       if (currentQty[productId] < 1) {
         const selectedProductsMinusProductId = selectedProducts.filter(
           (product) => product.id !== productIdAsInt
