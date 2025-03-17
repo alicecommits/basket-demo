@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { fetchProducts } from "./fetch";
+import { fetchProducts, OriginalProductsRecord } from "./fetch";
 import "./App.css";
 
 interface Product {
@@ -38,10 +38,10 @@ function App() {
 
   async function triggerFetch() {
     const results = await fetchProducts();
-    if (results === "err") {
+    if (results[0].title === "err fetch") {
       // do the error handling
     }
-    const productData = results.map((record: any) => {
+    const productData = results.map((record: OriginalProductsRecord) => {
       return {
         id: record.id,
         image: record.image,
