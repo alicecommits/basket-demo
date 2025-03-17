@@ -59,7 +59,7 @@ function App() {
   // dynamically generated from products.map((product) => {...})
   function handleProductSelect(product: Product) {
     // first, quantities
-    setProductQty((prevQty: any) => {
+    setProductQty((prevQty: Quantity) => {
       // new object to avoid state mutation
       const newQty = { ...prevQty };
       // if exists in our object, increment, else init to 1
